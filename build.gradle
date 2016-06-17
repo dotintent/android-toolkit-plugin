@@ -1,0 +1,93 @@
+
+apply plugin: 'groovy'
+apply plugin: 'maven-publish'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile gradleApi()
+    compile localGroovy()
+    compile 'org.apache.commons:commons-lang3:3.4'
+}
+
+
+ext {
+    getCommitIndex = {
+        return "git rev-list HEAD --count".execute().text.trim();
+    }
+}
+
+group 'com.infullmobile'
+version sprintf('0.3.%s', project.getCommitIndex())
+println "Version is " + project.version
+
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+}
+
+task sourceJar(type: Jar) {
+    from sourceSets.main.allJava
+    classifier "sources"
+}
+
+// Maven
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId project.group
+            artifactId "toolkit"
+            version project.version
+
+            from components.java
+            artifact sourceJar
+
+            pom.withXml {
+                asNode().appendNode('description',
+                        'Plugin which configures commonly used settings in Android projects.')
+            }
+        }
+    }
+    repositories {
+        maven {
+            name "iFMPrivateRelease"
+            url "s3://maven-ifm-internal/private"
+            credentials(AwsCredentials) {
+                accessKey project.getMavenAccessKey()
+                secretKey project.getMavenSecretKey()
+            }
+        }
+        maven {
+            name "iFMPublicRelease"
+            url "s3://maven-ifm-internal/public"
+            credentials(AwsCredentials) {
+                accessKey project.getMavenAccessKey()
+                secretKey project.getMavenSecretKey()
+            }
+        }
+    }
+}
+
+ext {
+    getMavenSecretKey = {
+        return project.hasProperty('mavenSecretKey') ? project['mavenSecretKey'] : ""
+    }
+    getMavenAccessKey = {
+        return project.hasProperty('mavenAccessKey') ? project['mavenAccessKey'] : ""
+    }
+}
+
+task("publishIFMPrivate", dependsOn: "publishMavenPublicationToIFMPrivateReleaseRepository") {
+    group "publishing"
+    description "Uploads artifacts to inFullMobile private maven repository"
+}
+
+task("publishIFMPublic", dependsOn: "publishMavenPublicationToIFMPublicReleaseRepository") {
+    group "publishing"
+    description "Uploads artifacts to inFullMobile public maven repository"
+}
