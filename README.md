@@ -113,7 +113,7 @@ Make those changes in `build.gradle` file of your root project:
 buildscript {
     repositories {
         maven {
-            url "https://maven.infullmobile.com/public"
+            url "http://maven.infullmobile.com/public"
         }
     }
     dependencies {
