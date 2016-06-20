@@ -31,14 +31,14 @@ class CopyTestResultsCommand extends IVariantConfigCommand {
             def String targetDir;
             if (isConnected) {
                 taskDependency = variantData.connectedTestTask.name
-                targetCheckTask = variantWrapper.connectedTask
+                targetCheckTask = variantWrapper.connectedTask;
                 sourceDir = "${configuredProject.buildDir}/outputs/androidTest-results"
                 targetDir = "${config.testReportDir}"
             } else {
                 taskDependency = "test${variantData.variantDependency.name.capitalize()}"
                 targetCheckTask = variantWrapper.baseTask
                 sourceDir = "${configuredProject.buildDir}/test-results/${variantWrapper.fullName}"
-                targetDir = "${config.testReportDir}/unitTest"
+                targetDir = "${config.testReportDir}/unitTest/${variantWrapper.fullName}"
             }
             configuredProject.task("copy${taskDependency.capitalize()}Results", type: Copy,
                     dependsOn: "${taskDependency}") {

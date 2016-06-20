@@ -65,6 +65,14 @@ class VariantWrapper {
         return "${this.variant.variantData.variantConfiguration.fullName}"
     }
 
+    def getFlavorName() {
+        def String ret = this.variant.variantData.variantConfiguration.flavorName
+        if (ret != null && ret.length() > 0) {
+            return ret;
+        }
+        return "";
+    }
+
     def String getDirName() {
         return "${this.variant.variantData.variantConfiguration.dirName}"
     }
