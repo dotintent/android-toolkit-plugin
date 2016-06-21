@@ -113,11 +113,11 @@ Make those changes in `build.gradle` file of your root project:
 buildscript {
     repositories {
         maven {
-            url "http://maven.infullmobile.com/public"
+            url "https://maven.infullmobile.com/public"
         }
     }
     dependencies {
-        classpath 'com.infullmobile:toolkit:0.3.3'
+        classpath 'com.infullmobile:toolkit:0.3.5'
     }
 }
 ```
@@ -192,6 +192,8 @@ If set to true, source and target compatibility will be set Java 1.8. Jack will 
 
 If set to false, Java 1.7 will be used.
 
+Right now FindBugs won't be executed for Java 1.8 projects
+
 #### appendVersionNameToAPK
 Default: `true`
 
@@ -265,6 +267,8 @@ Default: `true`
 
 If set to true, then custom check tasks will also execute FindBugs and FindBugs results will be copied to
 `results/findbugs` directory.
+
+Doesn't work when useJava8 is set to true;.
 
 #### ignoreFindbugsFailures
 Default: `true`

@@ -16,7 +16,7 @@ class ConfigureFindbugsInVariant extends IVariantConfigCommand {
 
     @Override
     boolean isCommandAllowed(IProjectConfigurator configurator) {
-        return config.configureFindbugs
+        return config.configureFindbugs && !config.useJava8
     }
 
     @Override
