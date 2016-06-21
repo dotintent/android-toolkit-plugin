@@ -117,7 +117,7 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'com.infullmobile:toolkit:0.3.5'
+        classpath 'com.infullmobile:toolkit:0.3.6'
     }
 }
 ```
