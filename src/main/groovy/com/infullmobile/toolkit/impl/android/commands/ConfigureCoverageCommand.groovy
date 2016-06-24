@@ -18,7 +18,7 @@ class ConfigureCoverageCommand extends IConfigCommand {
 
     @Override
     void performCommand(IProjectConfigurator configurator) {
-        configuredProject.android.buildTypes.each() { buildType ->
+        configuredProject.android.buildTypes.all() { buildType ->
             buildType.testCoverageEnabled = true
         }
         if(!PluginsUtils.hasJacocoPlugin(configuredProject)) {
