@@ -18,26 +18,29 @@ class ConfigureFabricCommand extends IConfigCommand {
 
     @Override
     void performCommand(IProjectConfigurator configurator) {
-        if(!PluginsUtils.hasFabricPlugin(configuredProject)) {
+        if (!PluginsUtils.hasFabricPlugin(configuredProject)) {
             return;
         }
         configuredProject.android.buildTypes.each { buildType ->
-            buildType.ext.betaDistributionGroupAliases = getFabricTeam()
-            def String changelogPath = getChangelogPath()
-            if (changelogPath) {
-                buildType.ext.betaDistributionReleaseNotesFilePath = changelogPath
+            def team = getChosenFabricTeam();
+            if (team) {
+                buildType.ext.betaDistributionGroupAliases = team
+            }
+            def String path = getChangelogPath()
+            if (path) {
+                buildType.ext.betaDistributionReleaseNotesFilePath = path
             }
         }
     }
 
-    def getFabricTeam() {
-        def team = configuredProject.hasProperty('fabricTeam') ? fabricTeam : config.defaultFabricTeam
+    def getChosenFabricTeam() {
+        def team = configuredProject.hasProperty('fabricTeam') ? configuredProject.fabricTeam : config.defaultFabricTeam
         println ">> Fabric team is set to $team on project ${configuredProject.name}"
         return team
     }
 
     def getChangelogPath() {
-        def path = configuredProject.hasProperty('fabricChangelogPath') ? changelogPath : null
+        def path = configuredProject.hasProperty('fabricChangelogPath') ? configuredProject.fabricChangelogPath : null
         println ">> Changelog path is set to $path in project ${configuredProject.name}"
         return path
     }
