@@ -117,7 +117,7 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'com.infullmobile:toolkit:0.3.12'
+        classpath 'com.infullmobile:toolkit:0.3.14'
     }
 }
 ```
@@ -195,7 +195,7 @@ If set to false, Java 1.7 will be used.
 Right now FindBugs won't be executed for Java 1.8 projects
 
 #### appendVersionNameToAPK
-Default: `true`
+Default: `false`
 
 If set to true, APK output file names will be modified by appending `versionName` to them.
 
@@ -421,6 +421,11 @@ Where:
 - `key.store.password` - password for your keystore file
 - `key.alias.password` - password to your alias
 
+#### runQAToolsInTests
+Default: `false`
+
+If true, FindBugs and Checkstyle will be executed for test source sets / variants.
+
 ### Example toolkit.properties file content
 
 ```
@@ -455,6 +460,7 @@ appendVersionNameToAPK=false
 
 configureMisc=true
 configureCustomFunctions=true
+runQAToolsInTests=true
 ```
 
 ## Planned work

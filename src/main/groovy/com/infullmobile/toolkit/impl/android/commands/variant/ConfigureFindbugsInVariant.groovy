@@ -33,6 +33,12 @@ class ConfigureFindbugsInVariant extends IVariantConfigCommand {
             configureFindbugsTask(it,  variantConfigurator);
         }
 
+        if(config.runQAToolsInTests) {
+            configureTestVariants(variantConfigurator);
+        }
+    }
+
+    def configureTestVariants(VariantConfigurator variantConfigurator) {
         variantConfigurator.variantWrapper.testVariants.each { TestVariantWrapper testVariant ->
             configuredProject.task("findbugs${variantWrapper.fullName.capitalize()}${testVariant.typeName.capitalize()}",
                     type: FindBugs,
