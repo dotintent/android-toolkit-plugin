@@ -21,7 +21,7 @@ class ToolkitConfiguration {
     def boolean configureFabric = true;
     def boolean configureCoverage = false
     def boolean useJava8 = false;
-    def boolean appendVersionNameToAPK = true;
+    def boolean appendVersionNameToAPK = false;
     def boolean configureTests = true;
 
     def boolean configureCheckstyle = true;
@@ -40,6 +40,8 @@ class ToolkitConfiguration {
 
     def boolean configureMisc = true;
     def boolean configureCustomFunctions = true;
+
+    boolean runQAToolsInTests = false;
 
     // tools version settings
     def Integer compileSdkVersion;

@@ -46,6 +46,12 @@ class ConfigureCheckstyleForVariant extends IVariantConfigCommand {
             variantConfigurator.config.checkstyleConfig.addTaskDependencies(this, it)
             variantWrapper.baseTask.dependsOn it
         }
+        if (variantConfigurator.config.runQAToolsInTests) {
+            addCheckstyleToTestVariants(checkstyleConfig, variantConfigurator)
+        }
+    }
+
+    protected addCheckstyleToTestVariants(File checkstyleConfig, VariantConfigurator variantConfigurator) {
         variantWrapper.testVariants.each { testVariant ->
             configuredProject.task("checkstyle${variantWrapper.fullName.capitalize()}${testVariant.typeName.capitalize()}",
                     type: Checkstyle) {
@@ -63,14 +69,16 @@ class ConfigureCheckstyleForVariant extends IVariantConfigCommand {
                 ignoreFailures variantConfigurator.config.ignoreCheckstyleFailures
 
                 reports.xml.enabled true
-                reports.xml.destination "${variantConfigurator.config.checkstyleReportDir}/${variantWrapper.fullName}-${testVariant.typeName}.xml"
+                reports.xml.destination "${variantConfigurator.config.checkstyleReportDir}/" +
+                        "${variantWrapper.fullName}-${testVariant.typeName}.xml"
                 reports.html.enabled true
-                reports.html.destination "${variantConfigurator.config.checkstyleReportDir}/${variantWrapper.fullName}-${testVariant.typeName}.html"
-
+                reports.html.destination "${variantConfigurator.config.checkstyleReportDir}/" +
+                        "${variantWrapper.fullName}-${testVariant.typeName}.html"
                 logging.setLevel(LogLevel.LIFECYCLE)
                 variantConfigurator.config.checkstyleConfig.addTaskDependencies(this, it)
                 variantWrapper.baseTask.dependsOn it
             }
         }
+
     }
 }
