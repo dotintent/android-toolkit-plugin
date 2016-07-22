@@ -18,7 +18,8 @@ class CreateKeyStoreExtCommand extends IConfigCommand {
     @Override
     void performCommand(IProjectConfigurator configurator) {
         configuredProject.ext.createSigningConfigFromFile = { String defaultPath ->
-            def String path = configuredProject.hasProperty('keystorePropPath') ? keystorePropPath : defaultPath;
+            def String path = configuredProject.hasProperty('keystorePropPath') ?
+                    configuredProject.keystorePropPath : defaultPath;
             println ">> Keystore properties path is set to $path";
             def propFile = new File(path);
             def propDir = propFile.getParentFile().getAbsolutePath();
