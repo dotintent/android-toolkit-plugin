@@ -117,7 +117,7 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'com.infullmobile:toolkit:0.3.14'
+        classpath 'com.infullmobile:toolkit:0.3.18'
     }
 }
 ```
@@ -205,6 +205,11 @@ For example, file `app-development-debug.apk` would be renamed to `app-developme
 Default: `true`
 
 If set to true, then custom check tasks will also run tests and test results will be copied to `results/test` directory.
+
+#### ignoreTestErrors
+Default: `false`
+
+If set to true, then verification tasks won't fail due to failed tests.
 
 #### configureCheckstyle
 Default: `true`

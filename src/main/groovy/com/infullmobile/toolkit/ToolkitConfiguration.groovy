@@ -22,7 +22,9 @@ class ToolkitConfiguration {
     def boolean configureCoverage = false
     def boolean useJava8 = false;
     def boolean appendVersionNameToAPK = false;
+
     def boolean configureTests = true;
+    def boolean ignoreTestErrors = false;
 
     def boolean configureCheckstyle = true;
     def boolean ignoreCheckstyleFailures = true;
