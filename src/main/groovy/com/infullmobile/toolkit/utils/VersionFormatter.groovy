@@ -52,10 +52,16 @@ class VersionFormatter {
 
     static int getVersionCodeWithConfiguration(ToolkitConfiguration configuration, Project project) {
         Properties properties = loadPropertiesForProject(project);
+        String versionString;
         if (properties != null && properties.containsKey(TOKEN_VERSION_CODE)) {
-            return Integer.parseInt((String)properties[TOKEN_VERSION_CODE]);
+            versionString = properties[TOKEN_VERSION_CODE];
+        } else {
+            versionString = getCommitCount();
         }
-        return Integer.parseInt(getCommitCount());
+        if (versionString == null || versionString.isEmpty()) {
+            versionString = "0";
+        }
+        return Integer.parseInt(versionString);
     }
 
     static def Properties loadPropertiesForProject(Project project) {
@@ -95,9 +101,11 @@ class VersionFormatter {
 
     public static def String getCommitCount() {
         try {
-            return "git rev-list HEAD --count".execute().text.trim();
+            def ret = "git rev-list HEAD --count".execute().text.trim();
+            Integer.parseInt(ret)
+            return ret
         } catch (Exception ignored) {
-            return DEFAULT_VERSION_TOKEN_VALUE;
+            return "0";
         }
     }
 }

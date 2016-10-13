@@ -17,10 +17,16 @@ ext {
     getCommitIndex = {
         return "git rev-list HEAD --count".execute().text.trim();
     }
+    obtainVersionSuffix = {
+        if (project.hasProperty('versionSuffix')) {
+            return project.versionSuffix
+        }
+        return ''
+    }
 }
 
 group 'com.infullmobile'
-version sprintf('0.3.%s', project.getCommitIndex())
+version sprintf('0.3.%s%s', project.getCommitIndex(), project.obtainVersionSuffix())
 println "Version is " + project.version
 
 sourceCompatibility = 1.7
