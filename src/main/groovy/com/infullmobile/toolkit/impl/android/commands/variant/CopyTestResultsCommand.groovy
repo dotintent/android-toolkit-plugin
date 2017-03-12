@@ -3,6 +3,9 @@ package com.infullmobile.toolkit.impl.android.commands.variant
 import com.infullmobile.toolkit.impl.android.IVariantConfigCommand
 import com.infullmobile.toolkit.impl.android.TestVariantWrapper
 import com.infullmobile.toolkit.impl.android.VariantConfigurator
+import com.infullmobile.toolkit.impl.android.VariantWrapper
+import com.infullmobile.toolkit.impl.android.utils.AndroidSDKVersion
+import com.infullmobile.toolkit.types.GradleVersion
 import com.infullmobile.toolkit.types.IProjectConfigurator
 import com.infullmobile.toolkit.utils.TaskGroup
 import org.gradle.api.tasks.Copy
@@ -37,7 +40,7 @@ class CopyTestResultsCommand extends IVariantConfigCommand {
             } else {
                 taskDependency = "test${variantData.variantDependency.name.capitalize()}"
                 targetCheckTask = variantWrapper.baseTask
-                sourceDir = "${configuredProject.buildDir}/test-results/${variantWrapper.fullName}"
+                sourceDir = getUnitTestsReportsDir(variantWrapper)
                 targetDir = "${config.testReportDir}/unitTest/${variantWrapper.fullName}"
             }
             configuredProject.task("copy${taskDependency.capitalize()}Results", type: Copy,
@@ -45,8 +48,22 @@ class CopyTestResultsCommand extends IVariantConfigCommand {
                 group TaskGroup.REPORT.groupName
                 from sourceDir
                 into targetDir
+                include "**/*.xml"
                 targetCheckTask.finalizedBy it
             }
         }
+    }
+
+    private String getUnitTestsReportsDir(VariantWrapper variantWrapper) {
+        String ret = "${configuredProject.buildDir}/test-results/"
+        if (GradleVersion.isVersionGTE(configuredProject, "3.0")) {
+            ret += "test${variantWrapper.fullName.capitalize()}UnitTest"
+            if (!AndroidSDKVersion.isVersionGTE("2.3.0")) {
+                ret = ret + "/${variantWrapper.fullName}"
+            }
+        } else {
+            ret += "${variantWrapper.fullName}"
+        }
+        return ret;
     }
 }
