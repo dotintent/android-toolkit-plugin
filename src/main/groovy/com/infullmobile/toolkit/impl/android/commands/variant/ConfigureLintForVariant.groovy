@@ -25,10 +25,11 @@ class ConfigureLintForVariant extends IVariantConfigCommand {
 
         configuredProject.task("copyLintResults${variantWrapper.fullName.capitalize()}", type: Copy) {
             group TaskGroup.REPORT.groupName
-            from "${configuredProject.buildDir}/outputs"
+            from "${configuredProject.buildDir}/reports", "${configuredProject.buildDir}/outputs"
             into "${config.lintReportDir.path}"
-            include "**lint*${variantWrapper.fullName}**/**"
+            include "*lint*${variantWrapper.fullName}**/**"
             variantWrapper.baseTask.finalizedBy "${name}"
+            configuredProject.tasks[lintTaskName].finalizedBy "${name}"
         }
         config.lintConfig.addTaskDependencies(this, variantWrapper.baseTask);
     }
