@@ -2,6 +2,7 @@ package com.infullmobile.toolkit.impl.android.commands.variant
 
 import com.infullmobile.toolkit.impl.android.IVariantConfigCommand
 import com.infullmobile.toolkit.impl.android.VariantConfigurator
+import com.infullmobile.toolkit.impl.android.utils.AndroidSDKVersion
 import com.infullmobile.toolkit.types.IProjectConfigurator
 import com.infullmobile.toolkit.utils.TaskGroup
 import org.gradle.api.tasks.Copy
@@ -25,12 +26,20 @@ class ConfigureLintForVariant extends IVariantConfigCommand {
 
         configuredProject.task("copyLintResults${variantWrapper.fullName.capitalize()}", type: Copy) {
             group TaskGroup.REPORT.groupName
-            from "${configuredProject.buildDir}/reports", "${configuredProject.buildDir}/outputs"
+            from getLintReportsDir()
             into "${config.lintReportDir.path}"
             include "*lint*${variantWrapper.fullName}**/**"
             variantWrapper.baseTask.finalizedBy "${name}"
             configuredProject.tasks[lintTaskName].finalizedBy "${name}"
         }
         config.lintConfig.addTaskDependencies(this, variantWrapper.baseTask);
+    }
+
+    private String getLintReportsDir() {
+        if(AndroidSDKVersion.isVersionGTE("2.3.0")) {
+            return "${configuredProject.buildDir}/reports"
+        } else {
+            return "${configuredProject.buildDir}/outputs"
+        }
     }
 }
