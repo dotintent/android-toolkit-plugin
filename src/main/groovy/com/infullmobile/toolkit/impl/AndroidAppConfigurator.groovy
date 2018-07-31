@@ -21,7 +21,6 @@ class AndroidAppConfigurator extends IProjectConfigurator {
         AndroidUtils.addCommonAndroidCommands(this);
 
         addCommands(
-                new JavaJackSetupCommand(),
                 new CreateKeyStoreExtCommand(),
                 new ConfigureFabricCommand(),
         )
