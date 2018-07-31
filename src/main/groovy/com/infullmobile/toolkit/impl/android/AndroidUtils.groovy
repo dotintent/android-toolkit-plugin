@@ -36,7 +36,6 @@ public final class AndroidUtils {
                 new ConfigureFindbugsCommand(),
                 new ConfigureToolsVersionCommand(),
                 new ConfigureLintCommand(),
-                new JavaVersionSetupCommand(),
                 new ExcludeMetaCommand(),
                 new ConfigureProguardCommand(),
                 new ConfigureCheckstyleCommand(),
