@@ -58,9 +58,6 @@ class CopyTestResultsCommand extends IVariantConfigCommand {
         String ret = "${configuredProject.buildDir}/test-results/"
         if (GradleVersion.isVersionGTE(configuredProject, "3.0")) {
             ret += "test${variantWrapper.fullName.capitalize()}UnitTest"
-            if (!AndroidSDKVersion.isVersionGTE("2.3.0")) {
-                ret = ret + "/${variantWrapper.fullName}"
-            }
         } else {
             ret += "${variantWrapper.fullName}"
         }

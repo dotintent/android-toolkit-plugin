@@ -36,10 +36,6 @@ class ConfigureLintForVariant extends IVariantConfigCommand {
     }
 
     private String getLintReportsDir() {
-        if(AndroidSDKVersion.isVersionGTE("2.3.0")) {
-            return "${configuredProject.buildDir}/reports"
-        } else {
-            return "${configuredProject.buildDir}/outputs"
-        }
+        return "${configuredProject.buildDir}/reports"
     }
 }
