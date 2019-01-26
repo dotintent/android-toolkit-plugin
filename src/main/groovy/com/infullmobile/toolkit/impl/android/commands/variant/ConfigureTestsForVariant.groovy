@@ -4,6 +4,7 @@ import com.infullmobile.toolkit.impl.android.IVariantConfigCommand
 import com.infullmobile.toolkit.impl.android.TestVariantWrapper
 import com.infullmobile.toolkit.impl.android.VariantConfigurator
 import com.infullmobile.toolkit.types.IProjectConfigurator
+import com.infullmobile.toolkit.utils.AndroidTestTaskLookup
 
 /**
  * Created by Adam Kobus on 26.09.2016.
@@ -22,15 +23,8 @@ class ConfigureTestsForVariant extends IVariantConfigCommand {
         variantWrapper.testVariants.each { TestVariantWrapper testVariant ->
             def variant = testVariant.variant
             def variantData = variant.variantData
-            String taskDependency
-            boolean isConnected = (testVariant.type == TestVariantWrapper.TestType.CONNECTED)
-
-            if (isConnected) {
-                taskDependency = variantData.connectedTestTask.name
-            } else {
-                taskDependency = "test${variantData.variantDependency.name.capitalize()}"
-            }
-            def task = configuredProject.tasks.findByPath(taskDependency)
+            def task = AndroidTestTaskLookup.findTestTask(configuredProject,
+                    testVariant.type, variantData)
             task.ignoreFailures = config.ignoreTestErrors
         }
     }

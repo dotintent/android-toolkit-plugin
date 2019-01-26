@@ -6,6 +6,7 @@ import com.infullmobile.toolkit.impl.android.VariantConfigurator
 import com.infullmobile.toolkit.impl.android.VariantWrapper
 import com.infullmobile.toolkit.types.GradleVersion
 import com.infullmobile.toolkit.types.IProjectConfigurator
+import com.infullmobile.toolkit.utils.AndroidTestTaskLookup
 import com.infullmobile.toolkit.utils.TaskGroup
 import org.gradle.api.tasks.Copy
 
@@ -27,17 +28,19 @@ class CopyTestResultsCommand extends IVariantConfigCommand {
             def variant = testVariant.variant
             def variantData = variant.variantData
             boolean isConnected = (testVariant.type == TestVariantWrapper.TestType.CONNECTED)
+            def task = AndroidTestTaskLookup.findTestTask(configuredProject,
+                    testVariant.type, variantData)
             String taskDependency
             def targetCheckTask
             String sourceDir
             String targetDir
             if (isConnected) {
-                taskDependency = variantData.connectedTestTask.name
+                taskDependency = task.name
                 targetCheckTask = variantWrapper.connectedTask
                 sourceDir = "${configuredProject.buildDir}/outputs/androidTest-results"
                 targetDir = "${config.testReportDir}"
             } else {
-                taskDependency = "test${variantData.variantDependency.name.capitalize()}"
+                taskDependency = task.name
                 targetCheckTask = variantWrapper.baseTask
                 sourceDir = getUnitTestsReportsDir(variantWrapper)
                 targetDir = "${config.testReportDir}/unitTest/${variantWrapper.fullName}"

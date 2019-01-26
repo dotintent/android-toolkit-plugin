@@ -30,6 +30,12 @@ class TestVariantWrapper {
                 return TestType.CONNECTED
             }
         } catch(MissingPropertyException ignored) {}
+
+        try {
+            if (variant.install != null) {
+                return TestType.CONNECTED
+            }
+        } catch(MissingPropertyException ignored) {}
         return TestType.UNIT
     }
 
