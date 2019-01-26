@@ -14,30 +14,30 @@ import org.gradle.api.UnknownTaskException
  */
 class MultiSourceConfigFile {
 
-    def String filePath = null;
-    def String downloadURL = null;
-    def final String configName;
+    String filePath = null
+    String downloadURL = null
+    final String configName
 
-    def MultiSourceConfigFile(String configName) {
-        this.configName = configName;
+    MultiSourceConfigFile(String configName) {
+        this.configName = configName
     }
 
     def loadFromProperties(Properties properties) {
-        def String configPathKey = "${configName}FilePath"
-        def String configURLKey = "${configName}URL"
+        String configPathKey = "${configName}FilePath"
+        String configURLKey = "${configName}URL"
         filePath = properties.getProperty(configPathKey, filePath)
         downloadURL = properties.getProperty(configURLKey, downloadURL)
     }
 
     def createDownloadTaskIfNeeded(IConfigCommand command) {
         if (!shouldUseRemoteConfig(command)) {
-            return;
+            return
         }
         File outputFile = getTempFile(command)
-        def downloadTask;
-        def String downloadTaskName = this.getDownloadTaskName(command);
+        def downloadTask
+        String downloadTaskName = this.getDownloadTaskName(command)
         try {
-            command.configuredProject.tasks[downloadTaskName];
+            command.configuredProject.tasks[downloadTaskName]
         } catch (UnknownTaskException ignored) {
             downloadTask = command.configuredProject.task(downloadTaskName, type: ConfigDownloadTask) {
                 description "Downloads configuration from url ${downloadURL}"
@@ -51,48 +51,48 @@ class MultiSourceConfigFile {
         return outputFile
     }
 
-    def boolean shouldUseRemoteConfig(IConfigCommand command) {
-        File configFile = getFileInProject(command.configuredProject, filePath);
+    boolean shouldUseRemoteConfig(IConfigCommand command) {
+        File configFile = getFileInProject(command.configuredProject, filePath)
         if (configFile != null) {
-            return false;
+            return false
         }
-        return !StringUtils.isEmpty(downloadURL);
+        return !StringUtils.isEmpty(downloadURL)
     }
 
     @Nullable
-    def File obtainConfigFile(IConfigCommand command) {
-        File configFile = getFileInProject(command.configuredProject, filePath);
-        if(configFile != null && configFile.exists()) {
-            return configFile;
+    File obtainConfigFile(IConfigCommand command) {
+        File configFile = getFileInProject(command.configuredProject, filePath)
+        if (configFile != null && configFile.exists()) {
+            return configFile
         }
         if (!StringUtils.isEmpty(downloadURL)) {
-            return getTempFile(command);
+            return getTempFile(command)
         }
-        return null;
+        return null
     }
 
-    static def File getFileInProject(Project project, String relativePath) {
+    static File getFileInProject(Project project, String relativePath) {
         if (project == null) {
-            throw new NullPointerException("Project must not be null");
+            throw new NullPointerException("Project must not be null")
         }
         if (relativePath == null) {
-            return null;
+            return null
         }
-        File file = new File(project.projectDir, relativePath);
+        File file = new File(project.projectDir, relativePath)
         if (!file.exists()) {
-            file = new File(project.rootDir, relativePath);
+            file = new File(project.rootDir, relativePath)
             if (!file.exists()) {
-                file = null;
+                file = null
             }
         }
-        return file;
+        return file
     }
 
-    def File getTempFile(IConfigCommand command) {
-        return new File(command.config.tempDir, configName);
+    File getTempFile(IConfigCommand command) {
+        return new File(command.config.tempDir, configName)
     }
 
-    def String getDownloadTaskName(IConfigCommand command) {
+    String getDownloadTaskName(IConfigCommand command) {
         return "download${configName.capitalize()}${command.configuredProject.name.capitalize()}"
     }
 

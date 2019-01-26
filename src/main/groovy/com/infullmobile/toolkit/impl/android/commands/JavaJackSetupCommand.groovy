@@ -12,7 +12,7 @@ class JavaJackSetupCommand extends IConfigCommand {
 
     @Override
     boolean isCommandAllowed(IProjectConfigurator configurator) {
-        return true;
+        return true
     }
 
     @Override

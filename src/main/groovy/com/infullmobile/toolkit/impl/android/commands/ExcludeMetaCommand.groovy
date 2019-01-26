@@ -8,15 +8,15 @@ import com.infullmobile.toolkit.types.IProjectConfigurator
  * Copyright (c) 2016, inFullMobile
  * License: MIT, file: /LICENSE
  */
-public class ExcludeMetaCommand extends IConfigCommand {
+class ExcludeMetaCommand extends IConfigCommand {
 
     @Override
-    public boolean isCommandAllowed(IProjectConfigurator configurator) {
-        return config.configureMisc;
+    boolean isCommandAllowed(IProjectConfigurator configurator) {
+        return config.configureMisc
     }
 
     @Override
-    public void performCommand(IProjectConfigurator configurator) {
+    void performCommand(IProjectConfigurator configurator) {
         configuredProject.configure(configuredProject.android.packagingOptions) {
             exclude 'META-INF/DEPENDENCIES.txt'
             exclude 'META-INF/LICENSE.txt'

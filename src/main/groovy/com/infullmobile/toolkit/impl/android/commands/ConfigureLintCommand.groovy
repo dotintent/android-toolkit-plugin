@@ -11,18 +11,18 @@ import com.infullmobile.toolkit.types.IProjectConfigurator
 class ConfigureLintCommand extends IConfigCommand {
 
     @Override
-    public boolean isCommandAllowed(IProjectConfigurator configurator) {
+    boolean isCommandAllowed(IProjectConfigurator configurator) {
         return config.configureLint
     }
 
     @Override
-    public void performCommand(IProjectConfigurator configurator) {
-        config.lintConfig.createDownloadTaskIfNeeded(this);
-        File configFile = config.lintConfig.obtainConfigFile(this);
+    void performCommand(IProjectConfigurator configurator) {
+        config.lintConfig.createDownloadTaskIfNeeded(this)
+        File configFile = config.lintConfig.obtainConfigFile(this)
         configuredProject.configure(configuredProject.android.lintOptions) {
             abortOnError !configurator.config.ignoreLintErrors
             noLines false
-            if(configFile) {
+            if (configFile) {
                 lintConfig configFile
             }
         }

@@ -8,12 +8,12 @@ import org.gradle.api.Project
  * Copyright (c) 2016, inFullMobile
  * License: MIT, file: /LICENSE
  */
-public abstract class IConfigCommand {
+abstract class IConfigCommand {
 
     Project configuredProject
     ToolkitConfiguration config
 
-    public abstract boolean isCommandAllowed(IProjectConfigurator configurator);
+    abstract boolean isCommandAllowed(IProjectConfigurator configurator);
 
-    public abstract void performCommand(IProjectConfigurator configurator);
+    abstract void performCommand(IProjectConfigurator configurator);
 }

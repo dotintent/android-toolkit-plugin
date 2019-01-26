@@ -10,31 +10,31 @@ import org.gradle.api.Project
  */
 abstract class IProjectConfigurator {
 
-    ToolkitConfiguration config;
-    Project configuredProject;
+    ToolkitConfiguration config
+    Project configuredProject
 
-    private List<IConfigCommand> commands = new ArrayList<>();
+    private List<IConfigCommand> commands = new ArrayList<>()
 
     IProjectConfigurator() {
 
     }
 
-    public final void addCommands(IConfigCommand ... commands) {
+    final void addCommands(IConfigCommand... commands) {
         commands.each {
-            this.addCommand(it);
+            this.addCommand(it)
         }
     }
 
     protected final void addCommand(IConfigCommand command) {
-        commands.add(command);
+        commands.add(command)
     }
 
-    public void configureProject() {
+    void configureProject() {
         commands.each { command ->
-            command.configuredProject = configuredProject;
-            command.config = config;
-            if(command.isCommandAllowed(this)) {
-                command.performCommand(this);
+            command.configuredProject = configuredProject
+            command.config = config
+            if (command.isCommandAllowed(this)) {
+                command.performCommand(this)
             }
         }
     }

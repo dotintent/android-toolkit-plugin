@@ -2,7 +2,6 @@ package com.infullmobile.toolkit.impl.android.commands.variant
 
 import com.infullmobile.toolkit.impl.android.IVariantConfigCommand
 import com.infullmobile.toolkit.impl.android.VariantConfigurator
-import com.infullmobile.toolkit.impl.android.utils.AndroidSDKVersion
 import com.infullmobile.toolkit.types.IProjectConfigurator
 import com.infullmobile.toolkit.utils.TaskGroup
 import org.gradle.api.tasks.Copy
@@ -21,7 +20,7 @@ class ConfigureLintForVariant extends IVariantConfigCommand {
 
     @Override
     protected performCommandWith(VariantConfigurator variantConfigurator) {
-        def String lintTaskName = "lint${variantWrapper.fullName.capitalize()}"
+        String lintTaskName = "lint${variantWrapper.fullName.capitalize()}"
         variantWrapper.baseTask.dependsOn "${lintTaskName}"
 
         configuredProject.task("copyLintResults${variantWrapper.fullName.capitalize()}", type: Copy) {
@@ -32,7 +31,7 @@ class ConfigureLintForVariant extends IVariantConfigCommand {
             variantWrapper.baseTask.finalizedBy "${name}"
             configuredProject.tasks[lintTaskName].finalizedBy "${name}"
         }
-        config.lintConfig.addTaskDependencies(this, variantWrapper.baseTask);
+        config.lintConfig.addTaskDependencies(this, variantWrapper.baseTask)
     }
 
     private String getLintReportsDir() {

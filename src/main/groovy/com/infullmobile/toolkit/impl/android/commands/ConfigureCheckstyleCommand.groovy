@@ -21,6 +21,6 @@ class ConfigureCheckstyleCommand extends IConfigCommand {
         if (!PluginsUtils.hasCheckstylePlugin(configuredProject)) {
             configuredProject.apply plugin: PluginsUtils.CHECKSTYLE_PLUGIN_ID
         }
-        config.checkstyleConfig.createDownloadTaskIfNeeded(this);
+        config.checkstyleConfig.createDownloadTaskIfNeeded(this)
     }
 }

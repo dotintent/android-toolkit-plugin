@@ -18,7 +18,7 @@ class ConfigureVersionNameCommand extends IConfigCommand {
 
     @Override
     void performCommand(IProjectConfigurator configurator) {
-        String generatedVersionName = VersionFormatter.getVersionWithConfiguration(config, configuredProject);
+        String generatedVersionName = VersionFormatter.getVersionWithConfiguration(config, configuredProject)
         configuredProject.configure(configuredProject.android.defaultConfig) {
             versionName = generatedVersionName
         }

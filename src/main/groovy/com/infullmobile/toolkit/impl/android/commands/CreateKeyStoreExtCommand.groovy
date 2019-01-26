@@ -12,31 +12,31 @@ class CreateKeyStoreExtCommand extends IConfigCommand {
 
     @Override
     boolean isCommandAllowed(IProjectConfigurator configurator) {
-        return config.configureCustomFunctions;
+        return config.configureCustomFunctions
     }
 
     @Override
     void performCommand(IProjectConfigurator configurator) {
         configuredProject.ext.createSigningConfigFromFile = { String defaultPath ->
-            def String path = configuredProject.hasProperty('keystorePropPath') ?
-                    configuredProject.keystorePropPath : defaultPath;
-            println ">> Keystore properties path is set to $path";
-            def propFile = new File(path);
-            def propDir = propFile.getParentFile().getAbsolutePath();
-            def propDirFile = new File(propDir);
+            String path = configuredProject.hasProperty('keystorePropPath') ?
+                    configuredProject.keystorePropPath : defaultPath
+            println ">> Keystore properties path is set to $path"
+            def propFile = new File(path)
+            def propDir = propFile.getParentFile().getAbsolutePath()
+            def propDirFile = new File(propDir)
 
-            def Properties keyProps = new Properties()
-            keyProps.load(new FileInputStream(propFile));
-            def String propFileRelativePath = keyProps['key.store'];
+            Properties keyProps = new Properties()
+            keyProps.load(new FileInputStream(propFile))
+            String propFileRelativePath = keyProps['key.store']
 
-            def keystoreFile = new File(propDirFile, propFileRelativePath);
+            def keystoreFile = new File(propDirFile, propFileRelativePath)
             def ret = {
-                keyAlias keyProps['key.alias'];
-                storeFile keystoreFile;
-                storePassword keyProps['key.store.password'];
-                keyPassword keyProps['key.alias.password'];
+                keyAlias keyProps['key.alias']
+                storeFile keystoreFile
+                storePassword keyProps['key.store.password']
+                keyPassword keyProps['key.alias.password']
             }
-            return ret;
+            return ret
         }
     }
 }

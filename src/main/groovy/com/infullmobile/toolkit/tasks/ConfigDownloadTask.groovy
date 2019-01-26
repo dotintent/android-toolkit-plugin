@@ -11,21 +11,21 @@ import org.gradle.api.tasks.TaskAction
  */
 class ConfigDownloadTask extends DefaultTask {
 
-    def String outputFilePath = null;
-    def String downloadURL = null;
+    String outputFilePath = null
+    String downloadURL = null
 
     @TaskAction
     def download() {
         if (StringUtils.isEmpty(outputFilePath)) {
-            throw new IllegalStateException("outputFilePath must not be empty");
+            throw new IllegalStateException("outputFilePath must not be empty")
         }
         if (StringUtils.isEmpty(downloadURL)) {
             throw new IllegalStateException("downloadURL must not be empty")
         }
-        File outputFile = new File(outputFilePath);
+        File outputFile = new File(outputFilePath)
         File outputFileDir = outputFile.parentFile
         if (!outputFileDir.exists()) {
-            project.mkdir(outputFileDir.absolutePath);
+            project.mkdir(outputFileDir.absolutePath)
         }
         println ">> Downloading configuration fom ${downloadURL}"
         outputFile.withOutputStream { OutputStream os ->

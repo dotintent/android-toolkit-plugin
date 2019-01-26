@@ -13,62 +13,62 @@ class ToolkitConfiguration {
 
     public static final String PROPERTIES_FILE_NAME = "toolkit.properties"
 
-    def String tempFilesDir = 'build/temp'
-    def String resultsDir = 'build/results'
-    def String defaultFabricTeam = "defaultinternal"
+    String tempFilesDir = 'build/temp'
+    String resultsDir = 'build/results'
+    String defaultFabricTeam = "defaultinternal"
 
-    def boolean configureBuildTasks = true;
-    def boolean configureFabric = true;
-    def boolean configureCoverage = false
-    def boolean useJava8 = false;
-    def boolean appendVersionNameToAPK = false;
+    boolean configureBuildTasks = true
+    boolean configureFabric = true
+    boolean configureCoverage = false
+    boolean useJava8 = false
+    boolean appendVersionNameToAPK = false
 
-    def boolean configureTests = true;
-    def boolean ignoreTestErrors = false;
+    boolean configureTests = true
+    boolean ignoreTestErrors = false
 
-    def boolean configureCheckstyle = true;
-    def boolean ignoreCheckstyleFailures = true;
+    boolean configureCheckstyle = true
+    boolean ignoreCheckstyleFailures = true
 
-    def boolean configureLint = true;
-    def boolean ignoreLintErrors = false;
+    boolean configureLint = true
+    boolean ignoreLintErrors = false
 
-    def boolean configureFindbugs = true;
-    def boolean ignoreFindbugsFailures = true;
-    def boolean findbugsUseXmlReports = true
+    boolean configureFindbugs = true
+    boolean ignoreFindbugsFailures = true
+    boolean findbugsUseXmlReports = true
 
-    def String versionFormat = '${versionMajor}.${versionMinor}.${gitCommitIndex}${versionSuffix}';
-    def boolean configureVersionName = false;
-    def boolean configureVersionCode = false;
+    String versionFormat = '${versionMajor}.${versionMinor}.${gitCommitIndex}${versionSuffix}'
+    boolean configureVersionName = false
+    boolean configureVersionCode = false
 
-    def boolean configureMisc = true;
-    def boolean configureCustomFunctions = true;
+    boolean configureMisc = true
+    boolean configureCustomFunctions = true
 
-    boolean runQAToolsInTests = false;
+    boolean runQAToolsInTests = false
 
     // tools version settings
-    def Integer compileSdkVersion;
-    def String buildToolsVersion;
-    def Integer minSdkVersion;
-    def Integer targetSdkVersion;
+    Integer compileSdkVersion
+    String buildToolsVersion
+    Integer minSdkVersion
+    Integer targetSdkVersion
 
-    def final File rootDir;
-    def final File projectDir;
-    def final String projectName;
+    final File rootDir
+    final File projectDir
+    final String projectName
 
-    def final MultiSourceConfigFile findbugsExcludedFilesConfig = new MultiSourceConfigFile("findbugsExcludedFilesConfig")
-    def final MultiSourceConfigFile checkstyleConfig = new MultiSourceConfigFile("checkstyleConfig")
-    def final MultiSourceConfigFile lintConfig = new MultiSourceConfigFile("lintConfig")
+    final MultiSourceConfigFile findbugsExcludedFilesConfig = new MultiSourceConfigFile("findbugsExcludedFilesConfig")
+    final MultiSourceConfigFile checkstyleConfig = new MultiSourceConfigFile("checkstyleConfig")
+    final MultiSourceConfigFile lintConfig = new MultiSourceConfigFile("lintConfig")
 
     ToolkitConfiguration(Project project) {
-        def propertiesFiles = [];
-        Project rootProject = project.rootProject;
+        def propertiesFiles = []
+        Project rootProject = project.rootProject
         if (rootProject && rootProject != project) {
-            propertiesFiles.add(new File(rootProject.projectDir, PROPERTIES_FILE_NAME));
+            propertiesFiles.add(new File(rootProject.projectDir, PROPERTIES_FILE_NAME))
         }
-        propertiesFiles.add(new File(project.projectDir, PROPERTIES_FILE_NAME));
+        propertiesFiles.add(new File(project.projectDir, PROPERTIES_FILE_NAME))
         propertiesFiles.each { File propFile ->
             if (propFile.exists()) {
-                loadPropertiesFromFile(propFile);
+                loadPropertiesFromFile(propFile)
             }
         }
         rootDir = project.rootDir.absoluteFile
@@ -77,40 +77,40 @@ class ToolkitConfiguration {
     }
 
     def loadPropertiesFromFile(File file) {
-        def Properties properties = new Properties()
-        properties.load(new FileInputStream(file));
+        Properties properties = new Properties()
+        properties.load(new FileInputStream(file))
 
-        PropertiesParser.applyProperties(properties, this);
-        this.findbugsExcludedFilesConfig.loadFromProperties(properties);
-        this.checkstyleConfig.loadFromProperties(properties);
-        this.lintConfig.loadFromProperties(properties);
+        PropertiesParser.applyProperties(properties, this)
+        this.findbugsExcludedFilesConfig.loadFromProperties(properties)
+        this.checkstyleConfig.loadFromProperties(properties)
+        this.lintConfig.loadFromProperties(properties)
     }
 
-    def File getBinaryOutputDir() {
-        return new File(getResultDir(), "bin/${projectName}");
+    File getBinaryOutputDir() {
+        return new File(getResultDir(), "bin/${projectName}")
     }
 
-    def File getLintReportDir() {
-        return new File(getResultDir(), "lint/${projectName}");
+    File getLintReportDir() {
+        return new File(getResultDir(), "lint/${projectName}")
     }
 
-    def File getTestReportDir() {
-        return new File(getResultDir(), "test/${projectName}");
+    File getTestReportDir() {
+        return new File(getResultDir(), "test/${projectName}")
     }
 
-    def File getCheckstyleReportDir() {
-        return new File(getResultDir(), "checkstyle/${projectName}");
+    File getCheckstyleReportDir() {
+        return new File(getResultDir(), "checkstyle/${projectName}")
     }
 
-    def File getFindbugsReportDir() {
-        return new File(getResultDir(), "findbugs/${projectName}");
+    File getFindbugsReportDir() {
+        return new File(getResultDir(), "findbugs/${projectName}")
     }
 
-    def File getResultDir() {
-        return new File(rootDir, resultsDir);
+    File getResultDir() {
+        return new File(rootDir, resultsDir)
     }
 
     def getTempDir() {
-        return new File(projectDir, tempFilesDir);
+        return new File(projectDir, tempFilesDir)
     }
 }

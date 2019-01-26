@@ -8,18 +8,18 @@ import com.infullmobile.toolkit.types.IProjectConfigurator
  * Copyright (c) 2016, inFullMobile
  * License: MIT, file: /LICENSE
  */
-public abstract class IVariantConfigCommand extends IConfigCommand {
+abstract class IVariantConfigCommand extends IConfigCommand {
 
-    def VariantWrapper variantWrapper;
+    VariantWrapper variantWrapper
 
     @Override
-    public final void performCommand(IProjectConfigurator configurator) {
+    final void performCommand(IProjectConfigurator configurator) {
         if (!configurator instanceof VariantConfigurator) {
             throw new IllegalArgumentException("configurator must be an instance of " +
-                    VariantConfigurator.class.getName());
+                    VariantConfigurator.class.getName())
         }
-        VariantConfigurator variantConfigurator = (VariantConfigurator) configurator;
-        this.variantWrapper = variantConfigurator.variantWrapper;
+        VariantConfigurator variantConfigurator = (VariantConfigurator) configurator
+        this.variantWrapper = variantConfigurator.variantWrapper
         this.performCommandWith(variantConfigurator)
     }
 

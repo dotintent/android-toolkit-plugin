@@ -9,16 +9,16 @@ import org.gradle.api.JavaVersion
  * Copyright (c) 2016, inFullMobile
  * License: MIT, file: /LICENSE
  */
-public class JavaVersionSetupCommand extends IConfigCommand {
+class JavaVersionSetupCommand extends IConfigCommand {
 
     @Override
-    public boolean isCommandAllowed(IProjectConfigurator configurator) {
-        return true;
+    boolean isCommandAllowed(IProjectConfigurator configurator) {
+        return true
     }
 
     @Override
-    public void performCommand(IProjectConfigurator configurator) {
-        def javaVersion = config.useJava8 ? JavaVersion.VERSION_1_8 : JavaVersion.VERSION_1_7;
+    void performCommand(IProjectConfigurator configurator) {
+        def javaVersion = config.useJava8 ? JavaVersion.VERSION_1_8 : JavaVersion.VERSION_1_7
         configuredProject.configure(configuredProject.android.compileOptions) {
             sourceCompatibility javaVersion
             targetCompatibility javaVersion

@@ -12,7 +12,7 @@ class ConfigureProguardCommand extends IConfigCommand {
 
     @Override
     boolean isCommandAllowed(IProjectConfigurator configurator) {
-        return config.configureMisc;
+        return config.configureMisc
     }
 
     @Override
