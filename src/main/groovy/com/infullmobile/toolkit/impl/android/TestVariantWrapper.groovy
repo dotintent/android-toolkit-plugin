@@ -21,11 +21,22 @@ class TestVariantWrapper {
     TestVariantWrapper(Project project, variant) {
         this.project = project
         this.variant = variant
-        if (variant.variantData.connectedTestTask != null) {
-            type = TestType.CONNECTED
-        } else {
-            type = TestType.UNIT
-        }
+        type = resolveTestType(variant)
+    }
+
+    static TestType resolveTestType(variant) {
+        try {
+            if (variant.variantData.connectedTestTask != null) {
+                return TestType.CONNECTED
+            }
+        } catch(MissingPropertyException ignored) {}
+
+        try {
+            if (variant.install != null) {
+                return TestType.CONNECTED
+            }
+        } catch(MissingPropertyException ignored) {}
+        return TestType.UNIT
     }
 
     def getSourceDirs() {
