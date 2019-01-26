@@ -14,7 +14,7 @@ class ConfigureTestsForVariant extends IVariantConfigCommand {
 
     @Override
     boolean isCommandAllowed(IProjectConfigurator configurator) {
-        return config.configureTests;
+        return config.configureTests
     }
 
     @Override
@@ -22,8 +22,8 @@ class ConfigureTestsForVariant extends IVariantConfigCommand {
         variantWrapper.testVariants.each { TestVariantWrapper testVariant ->
             def variant = testVariant.variant
             def variantData = variant.variantData
-            String taskDependency;
-            def boolean isConnected = (testVariant.type == TestVariantWrapper.TestType.CONNECTED)
+            String taskDependency
+            boolean isConnected = (testVariant.type == TestVariantWrapper.TestType.CONNECTED)
 
             if (isConnected) {
                 taskDependency = variantData.connectedTestTask.name

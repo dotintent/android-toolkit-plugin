@@ -9,7 +9,7 @@ class GradleVersion {
 
     }
 
-    public static boolean isVersionGTE(Project project, String version) {
+    static boolean isVersionGTE(Project project, String version) {
         final VersionComparator versionComparator = new VersionComparator(project.gradle.gradleVersion)
         return versionComparator.gte(version)
     }

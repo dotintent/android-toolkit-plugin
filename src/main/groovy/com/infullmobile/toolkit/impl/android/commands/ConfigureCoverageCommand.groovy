@@ -13,7 +13,7 @@ class ConfigureCoverageCommand extends IConfigCommand {
 
     @Override
     boolean isCommandAllowed(IProjectConfigurator configurator) {
-        return config.configureCoverage;
+        return config.configureCoverage
     }
 
     @Override
@@ -21,7 +21,7 @@ class ConfigureCoverageCommand extends IConfigCommand {
         configuredProject.android.buildTypes.all() { buildType ->
             buildType.testCoverageEnabled = true
         }
-        if(!PluginsUtils.hasJacocoPlugin(configuredProject)) {
+        if (!PluginsUtils.hasJacocoPlugin(configuredProject)) {
             configuredProject.apply plugin: PluginsUtils.JACOCO_PLUGIN_ID
             configuredProject.jacoco {
 

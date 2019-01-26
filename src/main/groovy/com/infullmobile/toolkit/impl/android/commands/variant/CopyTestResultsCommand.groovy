@@ -4,7 +4,6 @@ import com.infullmobile.toolkit.impl.android.IVariantConfigCommand
 import com.infullmobile.toolkit.impl.android.TestVariantWrapper
 import com.infullmobile.toolkit.impl.android.VariantConfigurator
 import com.infullmobile.toolkit.impl.android.VariantWrapper
-import com.infullmobile.toolkit.impl.android.utils.AndroidSDKVersion
 import com.infullmobile.toolkit.types.GradleVersion
 import com.infullmobile.toolkit.types.IProjectConfigurator
 import com.infullmobile.toolkit.utils.TaskGroup
@@ -19,7 +18,7 @@ class CopyTestResultsCommand extends IVariantConfigCommand {
 
     @Override
     boolean isCommandAllowed(IProjectConfigurator configurator) {
-        return config.configureTests;
+        return config.configureTests
     }
 
     @Override
@@ -27,14 +26,14 @@ class CopyTestResultsCommand extends IVariantConfigCommand {
         variantWrapper.testVariants.each { TestVariantWrapper testVariant ->
             def variant = testVariant.variant
             def variantData = variant.variantData
-            def boolean isConnected = (testVariant.type == TestVariantWrapper.TestType.CONNECTED)
-            def String taskDependency;
+            boolean isConnected = (testVariant.type == TestVariantWrapper.TestType.CONNECTED)
+            String taskDependency
             def targetCheckTask
-            def String sourceDir;
-            def String targetDir;
+            String sourceDir
+            String targetDir
             if (isConnected) {
                 taskDependency = variantData.connectedTestTask.name
-                targetCheckTask = variantWrapper.connectedTask;
+                targetCheckTask = variantWrapper.connectedTask
                 sourceDir = "${configuredProject.buildDir}/outputs/androidTest-results"
                 targetDir = "${config.testReportDir}"
             } else {
@@ -61,6 +60,6 @@ class CopyTestResultsCommand extends IVariantConfigCommand {
         } else {
             ret += "${variantWrapper.fullName}"
         }
-        return ret;
+        return ret
     }
 }

@@ -13,23 +13,23 @@ class AppendVersionNameCommand extends IVariantConfigCommand {
 
     @Override
     boolean isCommandAllowed(IProjectConfigurator configurator) {
-        return config.appendVersionNameToAPK;
+        return config.appendVersionNameToAPK
     }
 
     @Override
     protected performCommandWith(VariantConfigurator variantConfigurator) {
         variantWrapper.variant.outputs.each { output ->
-            def String versionName = configuredProject.android.defaultConfig.versionName;
+            String versionName = configuredProject.android.defaultConfig.versionName
             if (output.zipAlign) {
-                output.outputFile = getFileWithVersionName(output.outputFile as File, versionName);
+                output.outputFile = getFileWithVersionName(output.outputFile as File, versionName)
             }
             output.packageApplication.outputFile = getFileWithVersionName(
-                    output.packageApplication.outputFile as File, versionName);
+                    output.packageApplication.outputFile as File, versionName)
         }
     }
 
-    static def File getFileWithVersionName(File original, String versionName) {
-        def String fileName = original.name
+    static File getFileWithVersionName(File original, String versionName) {
+        String fileName = original.name
         if (!original.name.contains(versionName) && !original.name.contains("unaligned")) {
             fileName = fileName.replace(".apk", "-${versionName}.apk")
         }

@@ -13,20 +13,20 @@ class ConfigureFabricCommand extends IConfigCommand {
 
     @Override
     boolean isCommandAllowed(IProjectConfigurator configurator) {
-        return config.configureFabric;
+        return config.configureFabric
     }
 
     @Override
     void performCommand(IProjectConfigurator configurator) {
         if (!PluginsUtils.hasFabricPlugin(configuredProject)) {
-            return;
+            return
         }
         configuredProject.android.buildTypes.all { buildType ->
-            def String team = getChosenFabricTeam();
+            String team = getChosenFabricTeam()
             if (team) {
                 buildType.ext.betaDistributionGroupAliases = team
             }
-            def String path = getChangelogPath()
+            String path = getChangelogPath()
             if (path) {
                 buildType.ext.betaDistributionReleaseNotesFilePath = path
             }

@@ -18,34 +18,34 @@ class PluginsUtils {
     public static final String FINDBUGS_PLUGIN_ID = "findbugs"
 
     static boolean isAndroidApplication(Project project) {
-        return hasPlugin(project, ANDROID_APP_PLUGIN_ID);
+        return hasPlugin(project, ANDROID_APP_PLUGIN_ID)
     }
 
     static boolean isAndroidLibrary(Project project) {
-        return hasPlugin(project, ANDROID_LIBRARY_PLUGIN_ID);
+        return hasPlugin(project, ANDROID_LIBRARY_PLUGIN_ID)
     }
 
     static boolean isJavaProject(Project project) {
-        return hasPlugin(project, JAVA_LIBRARY_PLUGIN_ID);
+        return hasPlugin(project, JAVA_LIBRARY_PLUGIN_ID)
     }
 
     static boolean hasFabricPlugin(Project project) {
-        return hasPlugin(project, FABRIC_LIBRARY_PLUGIN_ID);
+        return hasPlugin(project, FABRIC_LIBRARY_PLUGIN_ID)
     }
 
     static boolean hasCheckstylePlugin(Project project) {
-        return hasPlugin(project, CHECKSTYLE_PLUGIN_ID);
+        return hasPlugin(project, CHECKSTYLE_PLUGIN_ID)
     }
 
     static boolean hasJacocoPlugin(Project project) {
-        return hasPlugin(project, JACOCO_PLUGIN_ID);
+        return hasPlugin(project, JACOCO_PLUGIN_ID)
     }
 
     static boolean hasFindbugsPlugin(Project project) {
-        return hasPlugin(project, FINDBUGS_PLUGIN_ID);
+        return hasPlugin(project, FINDBUGS_PLUGIN_ID)
     }
 
     static boolean hasPlugin(Project project, String pluginName) {
-        return project.getPlugins().hasPlugin(pluginName);
+        return project.getPlugins().hasPlugin(pluginName)
     }
 }

@@ -1,7 +1,7 @@
 package com.infullmobile.toolkit.impl.android.commands.variant
 
-import com.infullmobile.toolkit.impl.android.VariantConfigurator
 import com.infullmobile.toolkit.impl.android.IVariantConfigCommand
+import com.infullmobile.toolkit.impl.android.VariantConfigurator
 import com.infullmobile.toolkit.types.IProjectConfigurator
 import com.infullmobile.toolkit.utils.PluginsUtils
 import com.infullmobile.toolkit.utils.TaskGroup
@@ -21,7 +21,7 @@ class AddBuildTasksCommand extends IVariantConfigCommand {
 
     @Override
     protected performCommandWith(VariantConfigurator variantConfigurator) {
-        def String buildTaskName = "build${variantWrapper.fullName.capitalize()}";
+        String buildTaskName = "build${variantWrapper.fullName.capitalize()}"
         configuredProject.task("${buildTaskName}",
                 type: Copy,
                 dependsOn: "assemble${variantWrapper.fullName.capitalize()}") {

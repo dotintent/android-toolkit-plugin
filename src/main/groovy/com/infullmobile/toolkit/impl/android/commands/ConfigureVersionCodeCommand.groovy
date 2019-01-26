@@ -13,12 +13,12 @@ class ConfigureVersionCodeCommand extends IConfigCommand {
 
     @Override
     boolean isCommandAllowed(IProjectConfigurator configurator) {
-        return config.configureVersionCode;
+        return config.configureVersionCode
     }
 
     @Override
     void performCommand(IProjectConfigurator configurator) {
-        int generatedVersionCode = VersionFormatter.getVersionCodeWithConfiguration(config, configuredProject);
+        int generatedVersionCode = VersionFormatter.getVersionCodeWithConfiguration(config, configuredProject)
         configuredProject.configure(configuredProject.android.defaultConfig) {
             versionCode = generatedVersionCode
         }

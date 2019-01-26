@@ -14,34 +14,34 @@ class TestVariantWrapper {
         UNIT;
     }
 
-    def variant;
-    def TestType type;
-    def Project project
+    def variant
+    TestType type
+    Project project
 
-    public TestVariantWrapper(Project project, variant) {
-        this.project = project;
-        this.variant = variant;
+    TestVariantWrapper(Project project, variant) {
+        this.project = project
+        this.variant = variant
         if (variant.variantData.connectedTestTask != null) {
-            type = TestType.CONNECTED;
+            type = TestType.CONNECTED
         } else {
-            type = TestType.UNIT;
+            type = TestType.UNIT
         }
     }
 
-    public getSourceDirs() {
-        return AndroidUtils.getSourcesFromVariantData(this.variant.variantData);
+    def getSourceDirs() {
+        return AndroidUtils.getSourcesFromVariantData(this.variant.variantData)
     }
 
-    def String getTypeName() {
-        if(type == TestType.CONNECTED) {
+    String getTypeName() {
+        if (type == TestType.CONNECTED) {
             return "androidTest"
         } else {
             return "unitTest"
         }
     }
 
-    def String getTestClassesPath() {
-        if(type == TestType.CONNECTED) {
+    String getTestClassesPath() {
+        if (type == TestType.CONNECTED) {
             return "androidTest"
         } else {
             return "test"

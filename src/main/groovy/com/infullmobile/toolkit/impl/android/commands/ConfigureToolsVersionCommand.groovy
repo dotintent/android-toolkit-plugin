@@ -11,25 +11,25 @@ import com.infullmobile.toolkit.types.IProjectConfigurator
 class ConfigureToolsVersionCommand extends IConfigCommand {
 
     @Override
-    public boolean isCommandAllowed(IProjectConfigurator configurator) {
-        return true;
+    boolean isCommandAllowed(IProjectConfigurator configurator) {
+        return true
     }
 
     @Override
-    public void performCommand(IProjectConfigurator configurator) {
+    void performCommand(IProjectConfigurator configurator) {
         configuredProject.configure(configuredProject.android) {
-            if(config.compileSdkVersion) {
+            if (config.compileSdkVersion) {
                 compileSdkVersion config.compileSdkVersion
             }
-            if(config.buildToolsVersion) {
+            if (config.buildToolsVersion) {
                 buildToolsVersion config.buildToolsVersion
             }
         }
         configuredProject.configure(configuredProject.android.defaultConfig) {
-            if(config.minSdkVersion) {
+            if (config.minSdkVersion) {
                 minSdkVersion config.minSdkVersion
             }
-            if(config.targetSdkVersion) {
+            if (config.targetSdkVersion) {
                 targetSdkVersion config.targetSdkVersion
             }
         }

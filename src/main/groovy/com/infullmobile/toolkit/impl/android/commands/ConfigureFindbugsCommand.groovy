@@ -25,6 +25,6 @@ class ConfigureFindbugsCommand extends IConfigCommand {
                 reportsDir = configurator.config.findbugsReportDir
             }
         }
-        config.findbugsExcludedFilesConfig.createDownloadTaskIfNeeded(this);
+        config.findbugsExcludedFilesConfig.createDownloadTaskIfNeeded(this)
     }
 }

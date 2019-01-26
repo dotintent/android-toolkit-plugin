@@ -21,7 +21,7 @@ class ConfigureCheckstyleForVariant extends IVariantConfigCommand {
 
     @Override
     protected performCommandWith(VariantConfigurator variantConfigurator) {
-        def File checkstyleConfig = config.checkstyleConfig.obtainConfigFile(this);
+        File checkstyleConfig = config.checkstyleConfig.obtainConfigFile(this)
 
         configuredProject.task("checkstyle${variantWrapper.fullName.capitalize()}", type: Checkstyle) {
             group TaskGroup.VERIFICATION.groupName

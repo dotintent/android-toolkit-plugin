@@ -30,11 +30,11 @@ class ConfigureFindbugsInVariant extends IVariantConfigCommand {
             source = variantConfigurator.variantWrapper.variant.javaCompile.source
             classpath = variantConfigurator.variantWrapper.variant.javaCompile.classpath
 
-            configureFindbugsTask(it,  variantConfigurator);
+            configureFindbugsTask(it, variantConfigurator)
         }
 
-        if(config.runQAToolsInTests) {
-            configureTestVariants(variantConfigurator);
+        if (config.runQAToolsInTests) {
+            configureTestVariants(variantConfigurator)
         }
     }
 
@@ -49,13 +49,13 @@ class ConfigureFindbugsInVariant extends IVariantConfigCommand {
                 source = testVariant.variant.javaCompile.source
                 classpath = testVariant.variant.javaCompile.classpath
 
-                configureFindbugsTask(it, variantConfigurator);
+                configureFindbugsTask(it, variantConfigurator)
             }
         }
     }
 
     def configureFindbugsTask(task, VariantConfigurator variantConfigurator) {
-        def File excludedFilesConfig = config.findbugsExcludedFilesConfig.obtainConfigFile(this);
+        File excludedFilesConfig = config.findbugsExcludedFilesConfig.obtainConfigFile(this)
         task.group TaskGroup.VERIFICATION.groupName
         task.ignoreFailures = variantConfigurator.config.ignoreFindbugsFailures
         task.reportLevel = "low"
@@ -70,6 +70,6 @@ class ConfigureFindbugsInVariant extends IVariantConfigCommand {
             xml.withMessages = true
         }
         variantWrapper.baseTask.dependsOn task
-        variantConfigurator.config.findbugsExcludedFilesConfig.addTaskDependencies(this, task);
+        variantConfigurator.config.findbugsExcludedFilesConfig.addTaskDependencies(this, task)
     }
 }

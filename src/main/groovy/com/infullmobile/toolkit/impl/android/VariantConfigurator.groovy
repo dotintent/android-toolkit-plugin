@@ -1,10 +1,6 @@
 package com.infullmobile.toolkit.impl.android
 
-import com.infullmobile.toolkit.impl.android.commands.variant.ConfigureCheckstyleForVariant
-import com.infullmobile.toolkit.impl.android.commands.variant.ConfigureFindbugsInVariant
-import com.infullmobile.toolkit.impl.android.commands.variant.ConfigureLintForVariant
-import com.infullmobile.toolkit.impl.android.commands.variant.ConfigureTestsForVariant
-import com.infullmobile.toolkit.impl.android.commands.variant.CopyTestResultsCommand
+import com.infullmobile.toolkit.impl.android.commands.variant.*
 import com.infullmobile.toolkit.types.IProjectConfigurator
 
 /**
@@ -16,8 +12,8 @@ class VariantConfigurator extends IProjectConfigurator {
 
     public VariantWrapper variantWrapper
 
-    public VariantConfigurator(VariantWrapper variantWrapper) {
-        this.variantWrapper = variantWrapper;
+    VariantConfigurator(VariantWrapper variantWrapper) {
+        this.variantWrapper = variantWrapper
         addCommands(
                 new ConfigureLintForVariant(),
                 new ConfigureCheckstyleForVariant(),

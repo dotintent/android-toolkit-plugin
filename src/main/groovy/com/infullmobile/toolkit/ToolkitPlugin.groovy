@@ -18,20 +18,20 @@ class ToolkitPlugin implements Plugin<Project> {
 
     @Override
     void apply(Project project) {
-        IProjectConfigurator projectConfigurator = null;
-        if(PluginsUtils.isAndroidApplication(project)) {
-            projectConfigurator = new AndroidAppConfigurator();
-        } else if(PluginsUtils.isAndroidLibrary(project)) {
-            projectConfigurator = new AndroidLibraryConfigurator();
-        } else if(PluginsUtils.isJavaProject(project)) {
-            projectConfigurator = new JavaProjectConfigurator();
+        IProjectConfigurator projectConfigurator = null
+        if (PluginsUtils.isAndroidApplication(project)) {
+            projectConfigurator = new AndroidAppConfigurator()
+        } else if (PluginsUtils.isAndroidLibrary(project)) {
+            projectConfigurator = new AndroidLibraryConfigurator()
+        } else if (PluginsUtils.isJavaProject(project)) {
+            projectConfigurator = new JavaProjectConfigurator()
         }
 
-        if(projectConfigurator == null) {
-            throw new IllegalStateException("Failed to configure project ${project} , unknown type");
+        if (projectConfigurator == null) {
+            throw new IllegalStateException("Failed to configure project ${project} , unknown type")
         }
-        projectConfigurator.setConfig(new ToolkitConfiguration(project));
-        projectConfigurator.setConfiguredProject(project);
-        projectConfigurator.configureProject();
+        projectConfigurator.setConfig(new ToolkitConfiguration(project))
+        projectConfigurator.setConfiguredProject(project)
+        projectConfigurator.configureProject()
     }
 }

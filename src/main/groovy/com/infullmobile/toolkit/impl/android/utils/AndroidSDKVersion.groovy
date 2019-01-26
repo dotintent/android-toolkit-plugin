@@ -7,7 +7,7 @@ import java.lang.reflect.Field
 
 class AndroidSDKVersion {
 
-    private final VersionComparator versionComparator;
+    private final VersionComparator versionComparator
 
     private AndroidSDKVersion() {
         def andVersion = Class.forName("com.android.builder.Version")
@@ -21,17 +21,17 @@ class AndroidSDKVersion {
         this.versionComparator = new VersionComparator(version)
     }
 
-    private static AndroidSDKVersion INSTANCE;
+    private static AndroidSDKVersion INSTANCE
 
-    public static boolean isVersionGTE(String version) {
-        createInstanceIfNeeded();
+    static boolean isVersionGTE(String version) {
+        createInstanceIfNeeded()
         return INSTANCE.versionComparator.gte(version)
     }
 
     private static void createInstanceIfNeeded() {
         synchronized (AndroidSDKVersion.class) {
             if (INSTANCE == null) {
-                INSTANCE = new AndroidSDKVersion();
+                INSTANCE = new AndroidSDKVersion()
             }
         }
     }

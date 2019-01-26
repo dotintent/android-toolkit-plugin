@@ -5,13 +5,13 @@ package com.infullmobile.toolkit.utils
  * Copyright (c) 2016, inFullMobile
  * License: MIT, file: /LICENSE
  */
-public enum TaskGroup {
+enum TaskGroup {
     PREPARATION,
     VERIFICATION,
     REPORT,
     BUILD;
 
     String getGroupName() {
-        return this.name().toLowerCase(Locale.US);
+        return this.name().toLowerCase(Locale.US)
     }
 }
