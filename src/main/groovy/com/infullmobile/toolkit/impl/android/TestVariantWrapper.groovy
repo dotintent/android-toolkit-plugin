@@ -32,7 +32,7 @@ class TestVariantWrapper {
         } catch(MissingPropertyException ignored) {}
 
         try {
-            if (variant.install != null) {
+            if (variant.installProvider != null) {
                 return TestType.CONNECTED
             }
         } catch(MissingPropertyException ignored) {}
@@ -40,7 +40,7 @@ class TestVariantWrapper {
     }
 
     def getSourceDirs() {
-        return AndroidUtils.getSourcesFromVariantData(this.variant.variantData)
+        return AndroidUtils.getSourcesFromVariant(this.variant)
     }
 
     String getTypeName() {
