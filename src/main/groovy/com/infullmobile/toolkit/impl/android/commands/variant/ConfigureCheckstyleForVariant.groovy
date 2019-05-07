@@ -4,8 +4,10 @@ import com.infullmobile.toolkit.impl.android.IVariantConfigCommand
 import com.infullmobile.toolkit.impl.android.VariantConfigurator
 import com.infullmobile.toolkit.types.IProjectConfigurator
 import com.infullmobile.toolkit.utils.TaskGroup
+import org.gradle.api.Task
 import org.gradle.api.logging.LogLevel
 import org.gradle.api.plugins.quality.Checkstyle
+import org.gradle.api.reporting.internal.TaskGeneratedSingleFileReport
 
 /**
  * Created by Adam Kobus on 08.06.2016.
@@ -19,8 +21,12 @@ class ConfigureCheckstyleForVariant extends IVariantConfigCommand {
         return config.configureCheckstyle
     }
 
+    private File makeReport(String fileName) {
+        return new File(fileName)
+    }
+
     @Override
-    protected performCommandWith(VariantConfigurator variantConfigurator) {
+    protected performCommandWith(VariantConfigurator vC) {
         File checkstyleConfig = config.checkstyleConfig.obtainConfigFile(this)
 
         configuredProject.task("checkstyle${variantWrapper.fullName.capitalize()}", type: Checkstyle) {
@@ -35,23 +41,24 @@ class ConfigureCheckstyleForVariant extends IVariantConfigCommand {
             include '**/*.java'
             exclude '**/gen/**'
             classpath = configuredProject.files()
-            ignoreFailures variantConfigurator.config.ignoreCheckstyleFailures
+            ignoreFailures vC.config.ignoreCheckstyleFailures
 
             reports.xml.enabled true
-            reports.xml.destination "${variantConfigurator.config.checkstyleReportDir}/${variantWrapper.fullName}.xml"
+            reports.xml.destination makeReport("${vC.config.checkstyleReportDir}/" +
+                    "${variantWrapper.fullName}.xml")
             reports.html.enabled true
-            reports.html.destination "${variantConfigurator.config.checkstyleReportDir}/${variantWrapper.fullName}.html"
+            reports.html.destination makeReport("${vC.config.checkstyleReportDir}/${variantWrapper.fullName}.html")
 
             logging.setLevel(LogLevel.LIFECYCLE)
-            variantConfigurator.config.checkstyleConfig.addTaskDependencies(this, it)
+            vC.config.checkstyleConfig.addTaskDependencies(this, it)
             variantWrapper.baseTask.dependsOn it
         }
-        if (variantConfigurator.config.runQAToolsInTests) {
-            addCheckstyleToTestVariants(checkstyleConfig, variantConfigurator)
+        if (vC.config.runQAToolsInTests) {
+            addCheckstyleToTestVariants(checkstyleConfig, vC)
         }
     }
 
-    protected addCheckstyleToTestVariants(File checkstyleConfig, VariantConfigurator variantConfigurator) {
+    protected addCheckstyleToTestVariants(File checkstyleConfig, VariantConfigurator vC) {
         variantWrapper.testVariants.each { testVariant ->
             configuredProject.task("checkstyle${variantWrapper.fullName.capitalize()}${testVariant.typeName.capitalize()}",
                     type: Checkstyle) {
@@ -66,19 +73,18 @@ class ConfigureCheckstyleForVariant extends IVariantConfigCommand {
                 include '**/*.java'
                 exclude '**/gen/**'
                 classpath = configuredProject.files()
-                ignoreFailures variantConfigurator.config.ignoreCheckstyleFailures
+                ignoreFailures vC.config.ignoreCheckstyleFailures
 
                 reports.xml.enabled true
-                reports.xml.destination "${variantConfigurator.config.checkstyleReportDir}/" +
-                        "${variantWrapper.fullName}-${testVariant.typeName}.xml"
+                reports.xml.destination makeReport("${vC.config.checkstyleReportDir}/" +
+                        "${variantWrapper.fullName}-${testVariant.typeName}.xml")
                 reports.html.enabled true
-                reports.html.destination "${variantConfigurator.config.checkstyleReportDir}/" +
-                        "${variantWrapper.fullName}-${testVariant.typeName}.html"
+                reports.html.destination makeReport("${vC.config.checkstyleReportDir}/" +
+                        "${variantWrapper.fullName}-${testVariant.typeName}.html")
                 logging.setLevel(LogLevel.LIFECYCLE)
-                variantConfigurator.config.checkstyleConfig.addTaskDependencies(this, it)
+                vC.config.checkstyleConfig.addTaskDependencies(this, it)
                 variantWrapper.baseTask.dependsOn it
             }
         }
-
     }
 }

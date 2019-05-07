@@ -78,6 +78,6 @@ class VariantWrapper {
     }
 
     def getSourceDirs() {
-        return AndroidUtils.getSourcesFromVariantData(variant.variantData)
+        return AndroidUtils.getSourcesFromVariant(variant)
     }
 }

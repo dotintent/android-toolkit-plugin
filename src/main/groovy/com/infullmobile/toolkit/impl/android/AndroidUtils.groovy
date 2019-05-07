@@ -14,10 +14,18 @@ final class AndroidUtils {
 
     }
 
-    static getSourcesFromVariantData(variantData) {
-        return variantData.javaSources.find {
-            !it.dir.path.contains("generated")
+    static getSourcesFromVariant(variant) {
+        def ret = new ArrayList<String>()
+        variant.sourceSets.each { sourceSet ->
+            if(sourceSet != null) {
+                sourceSet.java.source.each { source ->
+                    if(source != null) {
+                        ret.add(source)
+                    }
+                }
+            }
         }
+        return ret
     }
 
     static void addCommonAndroidCommands(IProjectConfigurator configurator) {
