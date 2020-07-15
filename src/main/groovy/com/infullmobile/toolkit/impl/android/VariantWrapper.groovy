@@ -32,7 +32,7 @@ class VariantWrapper {
         if (variant.testVariant) {
             testVariants.add(new TestVariantWrapper(project, variant.testVariant))
         }
-        def groupName = variant.variantData.variantConfiguration.buildType.name
+        def groupName = variant.buildType.name
         String groupTaskName = "checkBuildType${groupName.capitalize()}"
         def groupTaskDef
         try {
@@ -62,11 +62,11 @@ class VariantWrapper {
     }
 
     String getFullName() {
-        return "${this.variant.variantData.variantConfiguration.fullName}"
+        return "${this.variant.name}"
     }
 
     def getFlavorName() {
-        String ret = this.variant.variantData.variantConfiguration.flavorName
+        String ret = this.variant.flavorName
         if (ret != null && ret.length() > 0) {
             return ret
         }
@@ -74,7 +74,7 @@ class VariantWrapper {
     }
 
     String getDirName() {
-        return "${this.variant.variantData.variantConfiguration.dirName}"
+        return "${this.variant.variantData.dirName}"
     }
 
     def getSourceDirs() {
