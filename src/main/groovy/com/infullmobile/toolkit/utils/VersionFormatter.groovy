@@ -4,6 +4,8 @@ import com.infullmobile.toolkit.ToolkitConfiguration
 import org.apache.commons.lang3.text.StrSubstitutor
 import org.gradle.api.Project
 
+import java.text.SimpleDateFormat
+
 /**
  * Created by Adam Kobus on 08.06.2016.
  * Copyright (c) 2016, inFullMobile
@@ -17,6 +19,7 @@ class VersionFormatter {
     public static final String TOKEN_VERSION_MINOR = 'versionMinor'
     public static final String TOKEN_VERSION_ITERATION = 'versionIteration'
     public static final String TOKEN_SUFFIX = 'versionSuffix'
+    public static final String TOKEN_DATE = 'versionDate'
 
     public static final String TOKEN_VERSION_NAME = 'versionName'
     public static final String TOKEN_VERSION_CODE = 'versionCode'
@@ -25,7 +28,8 @@ class VersionFormatter {
             TOKEN_VERSION_MAJOR,
             TOKEN_VERSION_ITERATION,
             TOKEN_VERSION_MINOR,
-            TOKEN_SUFFIX
+            TOKEN_SUFFIX,
+            TOKEN_DATE
     ]
 
     private static final String DEFAULT_VERSION_TOKEN_VALUE = ""
@@ -94,9 +98,19 @@ class VersionFormatter {
             } else {
                 tokenValue = DEFAULT_VERSION_TOKEN_VALUE
             }
-            tokens.put(token, tokenValue)
+            tokens.put(token, processTokenValue(token, tokenValue))
         }
         tokens.put(TOKEN_GIT_COMMIT_INDEX, getCommitCount())
+    }
+
+    static def processTokenValue(String token, String value) {
+        if (token == TOKEN_DATE) {
+            def sdf = new SimpleDateFormat(value)
+            sdf.setTimeZone(TimeZone.getTimeZone("UTC"))
+            return sdf.format(new Date())
+        } else {
+            return value
+        }
     }
 
     static String getCommitCount() {
